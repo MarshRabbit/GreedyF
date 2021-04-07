@@ -68,6 +68,8 @@ Edsger Wybe Dijkstra 가 고안한 알고리즘으로, 그가 처음 고안한 �
 
 ## 4. 다익스트라 알고리즘 코드 java
 
+## 4.1) 다익스트라 알고리즘 java
+
 ```java
 public class Dijkstra {	
 
@@ -159,17 +161,129 @@ public static void main(String[] args) {
 4. D배열은 시작 노드로부터 배열i번째 노드와의 거리를 저장하는 배열이다.
 
 5. smallest 함수는 아직 방문하지 않은 노드중에 가장 짧은 거리를 반환하는 노드의 인덱스값을 반환하는 함수이다. 먼저 min 값이 초기값으로 제일 큰 값을 넣어주고, 인덱스는 0부터 시작한다. 그리고 for문으로 i는0부터 지역이 10개이니 0부터 10까지 i를 1개씩 증가시키면서 만약 아직 방문하지 않은 노드 중에서 현재 최소값min값 보다 더 작은 거리를 갖는 것이 있다면 최솟값min값에 그 값을 대입하고 인덱스에 그 때의 i값 (배열 내 위치)를 저장해줌으로써 가장 작은 것을 찾을 수 있게 계속 작은 값으로 갱신해준다.
+
 6. 다익스트라를 실행하는 함수이다. 최소비용(최소거리)이 담기는 배열 D에, 모든경로의 비용을 담는다. 또 cost 배열은 각각 지역으로 이동하면서 생기는 비용들을 저장한 배열이다. 
+
 7. s는 시작점이다. 그러므로  시작점은 방문했습니다. 라고 처리해주는 방문처리코드이다.
+
 8. 시작점 자기자신 부터 자기자신까지의 거리는 0이기 때문에 0으로 대입해준다.
+
 9. n개의 노드 간선은 n-1개 이기 때문에 9번 돌린다.
+
 10. smallest 함수(방문x노드 중 최소비용을 가지는 노드 인덱스 반환 함수)를 호출해서 가져온다.
+
 11. 방문해준다.
+
 12. 만약 아직 그 노드를 방문하지 않았다면
+
 13. 현재 노드(current)까지의 최소비용과 그 노드를 거쳐서 그 노드에 인접한 노드에 가는 비용의 합이 현재 인접한 노드로 가는 최소비용보다 적다면 그 값으로 갱신해준다
+
 14. 지역번호가 1.서울 2.천안 3.원주 4.강릉 5.논산 6.대전 7.대구 8.포항 9.광주 10.부산
+
 15. cost배열에서 0번째인 서울에서 출발하는 다익스트라 알고리즘 실행
+
 16. 각 지역까지의 최소거리를 출력
+
+
+
+## 4.2) 우선순위 큐를 사용한 다익스트라 알고리즘
+
+```java
+import java.util.PriorityQueue;
+
+class Element implements Comparable<Element> {
+    int index;
+    int distance;
+
+
+    public Element(int index, int distance) {
+        this.index = index;
+        this.distance = distance;
+    }
+
+
+    @Override
+    public int compareTo(Element e) {
+
+        return this.distance - e.distance;
+    }
+
+
+}
+
+public class DijkstraPQ {
+    static boolean[] visited;
+    static int[] D;
+    static int[][] cost;
+    static int E = 14, V = 10;
+    static int INFI = 100000;
+
+
+
+    public static void DijkstaMethod(int start) {
+        PriorityQueue<Element> prq = new PriorityQueue<>();
+        D[start] = 0;
+        prq.offer(new Element(start, D[start]));
+
+        while(!prq.isEmpty()) {
+            int cost = prq.peek().distance;
+            int current = prq.peek().index;
+            prq.poll();
+
+            if (cost > D[current]) {   // 현재 배열에 있는 값(최단 거리)보다 cost가 더 크면
+                continue;
+            }
+
+            for (int i = 1; i <= V; ++i) {
+                if (DijkstraPQ.cost[current][i] != 0 && D[i] > (D[current] + DijkstraPQ.cost[current][i])) {
+                    D[i] = D[current] + DijkstraPQ.cost[current][i];
+                    prq.offer(new Element(i, D[i]));
+                }
+            }
+
+        }
+
+    }
+
+    public static void main(String[] args) {
+        visited = new boolean[V + 1];
+        D = new int[V + 1];
+        cost = new int[V + 1][V + 1];
+
+        for (int i = 1; i <= V; ++i) {
+            D[i] = INFI;
+        }
+
+        cost[1][2] = 12;
+        cost[1][3] = 15;
+        cost[2][5] = 4;
+        cost[2][6] = 10;
+        cost[3][4] = 21;
+        cost[3][7] = 7;
+        cost[4][8] = 25;
+        cost[5][6] = 3;
+        cost[5][9] = 13;
+        cost[6][7] = 10;
+        cost[7][8] = 19;
+        cost[7][10] = 9;
+        cost[8][10] = 5;
+        cost[9][10] = 15;
+
+
+
+        //지역번호 1.서울 2.천안 3.원주 4.강릉 5.논산 6.대전 7.대구 8.포항 9.광주 10.부산
+
+        DijkstaMethod(1);
+        System.out.println("서울에서 출발해서 \n서울 천안 원주 강릉 논산 대전 대구 포항 광주 부산 까지의 거리는");
+        for (int i = 1; i <= V; ++i) {   // dist 배열의 중간 결과 보여주기
+            System.out.print(" " + D[i] + "\t");
+        }
+
+    }
+}
+```
+
+
 
 
 
