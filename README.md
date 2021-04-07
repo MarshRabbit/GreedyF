@@ -121,7 +121,7 @@ public class greedy {
     private void dijkstra (int[][] A, int[] visited, int[] dist) {
         PriorityQueue <Element> queue = new <Element> PriorityQueue(); // 우선순위 큐 생성
         init(visited, dist);
-        queue.offer(new Element(0, 0)); // 출발점 0을 우선순위큐에 삽입
+        queue.add(new Element(0, 0)); // 출발점 0을 우선순위큐에 삽입
 
         while (!queue.isEmpty()) {
             int v = queue.peek().getIdx();  // 꼭짓점
@@ -134,7 +134,7 @@ public class greedy {
             for (int i = 1; i < 6; i++) { // 출발점이 0이므로 1부터
                 if (A[v][i] != 0 && dist[i] > dist[v] + A[v][i]) { // 자기 자신한테 향하는 경우 제외하고, 거처서 가는게 더 빠를경우
                     dist[i] = dist[v] + A[v][i];  // 최단거리값 삽입
-                    queue.offer(new Element(i, dist[i]));  // 최단거리인 꼭짓점을 우선순위큐에 삽입
+                    queue.add(new Element(i, dist[i]));  // 최단거리인 꼭짓점을 우선순위큐에 삽입
                 }
             }
 
