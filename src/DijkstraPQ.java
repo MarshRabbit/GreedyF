@@ -84,7 +84,7 @@ public class DijkstraPQ {
 
         DijkstaMethod(1);
         System.out.println("서울에서 출발해서 \n서울 천안 원주 강릉 논산 대전 대구 포항 광주 부산 까지의 거리는");
-        for (int i = 1; i <= V; ++i) {   // dist 배열의 중간 결과 보여주기
+        for (int i = 1; i <= V; ++i) {
             System.out.print(" " + D[i] + "\t");
         }
 
