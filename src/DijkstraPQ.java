@@ -13,13 +13,14 @@ class Element implements Comparable<Element> {
 
     @Override
     public int compareTo(Element e) {
+
         return this.distance - e.distance;
     }
 
 
 }
 
-public class DijkstraTest {
+public class DijkstraPQ {
     static boolean[] visited;
     static int[] D;
     static int[][] cost;
@@ -43,8 +44,8 @@ public class DijkstraTest {
             }
 
             for (int i = 1; i <= V; ++i) {
-                if (DijkstraTest.cost[current][i] != 0 && D[i] > (D[current] + DijkstraTest.cost[current][i])) {
-                    D[i] = D[current] + DijkstraTest.cost[current][i];
+                if (DijkstraPQ.cost[current][i] != 0 && D[i] > (D[current] + DijkstraPQ.cost[current][i])) {
+                    D[i] = D[current] + DijkstraPQ.cost[current][i];
                     prq.offer(new Element(i, D[i]));
                 }
             }
