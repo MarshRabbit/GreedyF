@@ -180,8 +180,8 @@ class Element implements Comparable<Element>{
     }
 
     @Override
-    public int compareTo(Element o){
-        return dist - o.dist;
+    public int compareTo(Element e){
+        return dist - e.dist;
     }
 }
 
@@ -211,7 +211,7 @@ public class greedy {
 
             visited[v] = 1; // 방문한 꼭짓점을 체크
 
-            for (int i=0; i<visited.length; i++) // 각 꼭짓점까지 방문했는지 확인
+            for (int i = 0; i < visited.length; i++) // 각 꼭짓점까지 방문했는지 확인
                 System.out.print(visited[i]+" ");
             System.out.println("");
         }
@@ -232,7 +232,7 @@ public class greedy {
         int[][] graph = new int [6][6];
         graph[0] = new int [] {0, 4, 5, 7, INF, INF};
         graph[1] = new int [] {4, 0, INF, INF, 9, INF};
-        graph[2] = new int [] {5, INF, INF, INF, INF, 1};
+        graph[2] = new int [] {5, INF, 0, INF, INF, 1};
         graph[3] = new int [] {7, INF, INF, 0, 2, 3};
         graph[4] = new int [] {INF, 9, INF, 2, 0, 8};
         graph[5] = new int [] {INF, INF, 1, 3, 8, 0};
@@ -244,7 +244,7 @@ public class greedy {
         fast.dijkstra(graph, t, d);
 
         System.out.println("");
-        for (int i=0; i<graph.length; i++) // 출발점에서부터 각 꼭짓점들 까지 가중치 값
+        for (int i = 0; i < graph.length; i++) // 출발점에서부터 각 꼭짓점들 까지 가중치 값
             System.out.print(d[i]+" ");
     }
 }
