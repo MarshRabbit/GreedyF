@@ -252,6 +252,11 @@ public class greedy {
 ```
 
 ## 7. 시간복잡도 비교
+
+
+
+![KakaoTalk_Photo_2021-04-08-16-50-03](https://user-images.githubusercontent.com/80511335/113988494-7f162a80-988a-11eb-9dd6-b9fc4092309e.png)
+
 일반적인 배열을 사용한 방식은 모든 노드(V)에 대해 최소거리를 찾아야하기 때문에 노드의 제곱인 O(V<sup>2</sup>)가 걸린다.
 
 여기서 우선순위 큐를 사용한다면 모든 간선에 대해서(O(E)) 큐를 업데이트(O(logV)) 하므로 O(ElogV)가 나온다.
